@@ -1,0 +1,16 @@
+# common fragment
+x-amd64: &amd64
+  platform: linux/amd64
+
+x-app: &app
+  working_dir: /app
+
+x-attachable: &attachable
+  tty: true
+  stdin_open: true
+
+# computing component
+services:
+  app:
+    <<: [*amd64, *app, *attachable]
+    image: node:20.18.0-alpine
