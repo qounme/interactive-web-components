@@ -1,0 +1,28 @@
+version: '8.1.0'
+
+compose:
+  files:
+    - compose.yaml
+
+interaction:
+  shell:
+    description: Open the Ash shell in app's container
+    service: app
+    command: ash
+  npm:
+    description: Run npm commands in app's container
+    service: app
+    command: npm
+  clean:
+    description: Delete node modules on the host machine
+    command: rm -rf $(pwd)/node_modules
+  setup:
+    description: Install node modules on the host machine
+    command: npm install
+
+provision:
+  - dip down --volumes
+  - dip npm install
+  - dip clean
+  - dip setup
+  - dip up --detach
